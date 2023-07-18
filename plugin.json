@@ -1,11 +1,11 @@
 {
-  "id": "mattermost-profanity-filter",
-  "name": "Profanity Filter",
-  "description": "Censor out profanity from user messages in real-time based on a list of words.",
-  "homepage_url": "https://github.com/mattermost/mattermost-plugin-profanity-filter",
-  "support_url": "https://github.com/mattermost/mattermost-plugin-profanity-filter/issues",
-  "release_notes_url": "https://github.com/mattermost/mattermost-plugin-profanity-filter/releases/tag/v1.0.0",
-  "version": "1.0.0",
+  "id": "mattermost-plugin-gateway",
+  "name": "MM Gateway",
+  "description": "Send messages to 3third http service through gateway",
+  "homepage_url": "https://github.com/BryanBB/mattermost-plugin-demo.git",
+  "support_url": "https://github.com/BryanBB/mattermost-plugin-demo.git/issues",
+  "release_notes_url": "https://github.com/BryanBB/mattermost-plugin-demo.git/releases/tag/v1.0.0",
+  "version": "0.1",
   "min_server_version": "5.2.0",
   "server": {
     "executables": {
