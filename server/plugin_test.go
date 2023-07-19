@@ -17,9 +17,21 @@ func TestMessageWillBePosted(t *testing.T) {
 			RejectPosts:     false,
 			BadWordsList:    "def ghi,abc,啊",
 			ExcludeBots:     true,
+			GatewayAll:      true,
 		},
 	}
 	p.badWordsRegex = regexp.MustCompile(wordListToRegex(p.getConfiguration().BadWordsList))
+
+	t.Run("sendto 3th http", func(t *testing.T) {
+		in := &model.Post{
+			Message:   "哈哈哈啊哈",
+			ChannelId: "Abcd",
+			Type:      "Direct",
+			UserId:    "12345",
+			FileIds:   []string{"11"},
+		}
+		p.MessageWillBePosted(&plugin.Context{}, in)
+	})
 
 	t.Run("word matches", func(t *testing.T) {
 		in := &model.Post{

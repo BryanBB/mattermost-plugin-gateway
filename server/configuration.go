@@ -24,6 +24,8 @@ import (
 // copy appropriate for your types.
 type configuration struct {
 	ExcludeBots     bool
+	GatewayAll      bool
+	GatewayDirect   bool
 	RejectPosts     bool
 	CensorCharacter string
 	BadWordsList    string

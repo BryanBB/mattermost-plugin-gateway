@@ -6,6 +6,6 @@ var manifest = struct {
 	ID      string
 	Version string
 }{
-	ID:      "mattermost-profanity-filter",
+	ID:      "mattermost-plugin-gateway",
 	Version: "1.0.0",
 }
