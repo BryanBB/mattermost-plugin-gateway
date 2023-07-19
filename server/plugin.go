@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
@@ -80,17 +79,17 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 	}
 	if isSend {
 		// 构造请求数据
-		data := map[string]interface{}{
-			"Message":   post.Message,
-			"ChannelId": post.ChannelId,
-			"createAt":  post.CreateAt,
-			"Type":      post.Type,
-			"UserId":    post.UserId,
-			"FileIds":   post.FileIds,
-		}
+		//data := map[string]interface{}{
+		//	"Message":   post.Message,
+		//	"ChannelId": post.ChannelId,
+		//	"createAt":  post.CreateAt,
+		//	"Type":      post.Type,
+		//	"UserId":    post.UserId,
+		//	"FileIds":   post.FileIds,
+		//}
 
-		// 发送 HTTP 请求到外部服务
-		jsonStr, _ := json.Marshal(data)
+		//// 发送 HTTP 请求到外部服务
+		//jsonStr, _ := json.Marshal(data)
 		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
 
 	}
