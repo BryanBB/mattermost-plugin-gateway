@@ -91,7 +91,7 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 
 		// 发送 HTTP 请求到外部服务
 		jsonStr, _ := json.Marshal(data)
-		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer(jsonStr))
+		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
 
 	}
 	return p.FilterPost(post)
