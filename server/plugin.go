@@ -81,22 +81,19 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 	if isSend {
 		hostConfig := p.API.GetConfig()
 		// 构造请求数据
-	//	data := map[string]interface{}{
-	//		"message":    post.Message,
-	//		"channel_id": post.ChannelId,
-	//		"create_at":  post.CreateAt,
-	//		"type":       post.Type,
-	//		"user_id":    post.UserId,
-	//		"file_ids":   post.FileIds,
-	//		"site_url":   hostConfig.ServiceSettings.SiteURL,
-	//	}
+        // 临时匿名结构体,包含原有字段和新增字段
+        mypost := struct {
+          *Post
+          SiteUrl string `json:"site_url"`
+        }{
+          Post: p,
+          SiteUrl: hostConfig.ServiceSettings.SiteURL,
+        }
 
-		//// 发送 HTTP 请求到外部服务
-		//jsonStr, _ := json.Marshal(data)
-		//http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(jsonStr)))
-
-        post.site_url = hostConfig.ServiceSettings.SiteURL
-		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
+	    //// 发送 HTTP 请求到外部服务
+	    jsonStr, _ := json.Marshal(mypost)
+   	    http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(jsonStr)))
+	    //http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
 	}
 	return p.FilterPost(post)
 }
