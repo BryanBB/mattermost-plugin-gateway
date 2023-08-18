@@ -83,10 +83,10 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 		// 构造请求数据
         // 临时匿名结构体,包含原有字段和新增字段
         mypost := struct {
-          *Post
-          SiteUrl string `json:"site_url"`
+          *model.Post `json:"post"`
+          SiteUrl *string `json:"site_url"`
         }{
-          Post: p,
+          Post: post,
           SiteUrl: hostConfig.ServiceSettings.SiteURL,
         }
 
