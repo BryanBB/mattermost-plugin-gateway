@@ -81,21 +81,22 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 	if isSend {
 		hostConfig := p.API.GetConfig()
 		// 构造请求数据
-		data := map[string]interface{}{
-			"message":    post.Message,
-			"channel_id": post.ChannelId,
-			"create_at":  post.CreateAt,
-			"type":       post.Type,
-			"user_id":    post.UserId,
-			"file_ids":   post.FileIds,
-			"site_url":   hostConfig.ServiceSettings.SiteURL,
-		}
+	//	data := map[string]interface{}{
+	//		"message":    post.Message,
+	//		"channel_id": post.ChannelId,
+	//		"create_at":  post.CreateAt,
+	//		"type":       post.Type,
+	//		"user_id":    post.UserId,
+	//		"file_ids":   post.FileIds,
+	//		"site_url":   hostConfig.ServiceSettings.SiteURL,
+	//	}
 
 		//// 发送 HTTP 请求到外部服务
-		jsonStr, _ := json.Marshal(data)
-		//http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
-		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(jsonStr)))
+		//jsonStr, _ := json.Marshal(data)
+		//http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(jsonStr)))
 
+        post.site_url = hostConfig.ServiceSettings.SiteURL
+		http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
 	}
 	return p.FilterPost(post)
 }
