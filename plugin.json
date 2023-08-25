@@ -60,7 +60,15 @@
         "display_name": "Send Direct Message:",
         "type": "bool",
         "help_text": "If set the plugin will only send Direct messages to 3th http service."
-      }
+      },
+      {
+        "key": "ThirdApi",
+        "display_name": "3th api:",
+        "type": "text",
+        "help_text": "if this api config, data would send to 3th api",
+        "placeholder": "",
+        "default": ""
+     }
     ],
     "header": "",
     "footer": ""

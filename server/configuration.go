@@ -30,6 +30,7 @@ type configuration struct {
 	CensorCharacter string
 	BadWordsList    string
 	WarningMessage  string `json:"WarningMessage"`
+	ThirdApi        string
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if

@@ -69,6 +69,10 @@ func (p *Plugin) FilterPost(post *model.Post) (*model.Post, string) {
 }
 
 func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*model.Post, string) {
+	return p.FilterPost(post)
+}
+
+func (p *Plugin) MessageHasBeenPosted(c *plugin.Context, post *model.Post) {
 	isSend := false
 	// GatewayAll 配置具有较高的优先级
 	if p.configuration.GatewayAll {
@@ -81,21 +85,19 @@ func (p *Plugin) MessageWillBePosted(_ *plugin.Context, post *model.Post) (*mode
 	if isSend {
 		hostConfig := p.API.GetConfig()
 		// 构造请求数据
-        // 临时匿名结构体,包含原有字段和新增字段
-        mypost := struct {
-          *model.Post `json:"post"`
-          SiteUrl *string `json:"site_url"`
-        }{
-          Post: post,
-          SiteUrl: hostConfig.ServiceSettings.SiteURL,
-        }
+		// 临时匿名结构体,包含原有字段和新增字段
+		mypost := struct {
+			*model.Post `json:"post"`
+			SiteUrl     *string `json:"site_url"`
+		}{
+			Post:    post,
+			SiteUrl: hostConfig.ServiceSettings.SiteURL,
+		}
 
-	    //// 发送 HTTP 请求到外部服务
-	    jsonStr, _ := json.Marshal(mypost)
-   	    http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(jsonStr)))
-	    //http.Post("http://app.ttjy.club/api/dispatch", "application/json", bytes.NewBuffer([]byte(post.ToJson())))
+		//// 发送 HTTP 请求到外部服务
+		jsonStr, _ := json.Marshal(mypost)
+		http.Post(p.configuration.ThirdApi, "application/json", bytes.NewBuffer([]byte(jsonStr)))
 	}
-	return p.FilterPost(post)
 }
 
 func (p *Plugin) MessageWillBeUpdated(_ *plugin.Context, newPost *model.Post, _ *model.Post) (*model.Post, string) {
